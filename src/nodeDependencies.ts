@@ -26,7 +26,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 		}
 
 		if (element) {
-			return element.data.children.filter(child => !child.inContext).map(child => {
+			return element.data.children.map(child => {
 				const collapsable = child.children ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
 
 				const node = new UINode(child.id, child.rmType, child, collapsable)
@@ -79,6 +79,9 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 			let processed = processTree(data.tree)
 			visit(processed, (node, index, parent) => {
 				node.path = parent ? `${parent.path}/${node.id}` : node.id
+				if (node.max === -1 || node.max > 1) {
+					node.path = `${node.path}:0`
+				}
 			})
 			console.debug({ processed })
 			return new UINode(t, 'Template', processed, vscode.TreeItemCollapsibleState.Collapsed)

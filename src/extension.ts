@@ -3,7 +3,6 @@
 import * as vscode from 'vscode';
 
 import { DepNodeProvider, UINode } from './nodeDependencies';
-import { insertText } from './insert';
 
 export function activate(context: vscode.ExtensionContext) {
 

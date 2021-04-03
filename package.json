@@ -1,10 +1,9 @@
 {
-	"name": "custom-view-samples",
-	"displayName": "Custom view Samples",
-	"description": "Samples for VSCode's view API",
-	"version": "0.0.1",
-	"publisher": "vscode-samples",
-	"enableProposedApi": true,
+	"name": "medblocks-ui",
+	"displayName": "Medblocks UI",
+	"description": "Fast path resolution and snippets for Medblocks UI",
+	"version": "0.0.2",
+	"publisher": "tornadoalert",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
@@ -101,5 +100,8 @@
 		"mkdirp": "^0.5.1",
 		"rimraf": "^2.6.2",
 		"unist-util-visit": "^2.0.3"
+	},
+	"repository": {
+		"url": "https://github.com/sidharthramesh/vscode-medblocks-ui.git"
 	}
 }
