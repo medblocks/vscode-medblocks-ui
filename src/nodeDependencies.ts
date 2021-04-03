@@ -3,21 +3,28 @@ import * as fs from 'fs';
 import * as path from 'path';
 const visit = require('unist-util-visit')
 import defaultTransform, { TransformFunction } from './defaultTransform'
-import { getTransform } from './loadTransform';
+import { pathExists, getTransform } from './utils';
 
 export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 	private _onDidChangeTreeData: vscode.EventEmitter<UINode | undefined | void> = new vscode.EventEmitter<UINode | undefined | void>();
 	readonly onDidChangeTreeData: vscode.Event<UINode | undefined | void> = this._onDidChangeTreeData.event;
 
-	constructor(private workspaceRoot: string, private transform: TransformFunction) {
+	workspaceRoot: string
+	transform: TransformFunction
 
+	constructor(workspaceRoot: string, transform?: TransformFunction) {
+		this.workspaceRoot = workspaceRoot
+		this.transform = transform || getTransform(workspaceRoot)
 	}
 
 
 
 	refresh(): void {
 		this._onDidChangeTreeData.fire();
+	}
+
+	refreshConfig(): void {
 		this.transform = getTransform(this.workspaceRoot)
 	}
 
@@ -56,7 +63,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 		} else {
 			const templatesPath = path.join(this.workspaceRoot, 'templates');
-			if (this.pathExists(templatesPath)) {
+			if (pathExists(templatesPath)) {
 				const templates = fs.readdirSync(templatesPath)
 				if (!(templates?.length > 0)) {
 					vscode.window.showInformationMessage(`Found no templates in templates directory`);
@@ -101,15 +108,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 		})
 	}
 
-	private pathExists(p: string): boolean {
-		try {
-			fs.accessSync(p);
-		} catch (err) {
-			return false;
-		}
 
-		return true;
-	}
 }
 
 export class UINode extends vscode.TreeItem {

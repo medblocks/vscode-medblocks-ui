@@ -4,10 +4,8 @@ export type TransformFunction = (leaf: { path: string, rmType: string, [other: s
 
 
 const transform: TransformFunction = (leaf) => {
-	console.log("from transform", { leaf })
 	switch (leaf.rmType) {
 		case 'DV_QUANTITY':
-			console.log("DV_QUANTITY")
 			return [{
 				name: 'mb-quantity',
 				html: `<mb-quantity path="${leaf.path}" default="kg" label="${leaf.name}">

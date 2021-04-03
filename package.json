@@ -2,7 +2,7 @@
 	"name": "medblocks-ui",
 	"displayName": "Medblocks UI",
 	"description": "Fast path resolution and snippets for Medblocks UI",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"publisher": "tornadoalert",
 	"engines": {
 		"vscode": "^1.52.0"
@@ -20,7 +20,7 @@
 			"activitybar": [
 				{
 					"id": "package-explorer",
-					"title": "Package Explorer",
+					"title": "Medblocks UI",
 					"icon": "media/dep.svg"
 				}
 			]
@@ -29,7 +29,7 @@
 			"package-explorer": [
 				{
 					"id": "nodeDependencies",
-					"name": "Node Dependencies",
+					"name": "Templates",
 					"icon": "media/dep.svg",
 					"contextualTitle": "Package Explorer"
 				}
@@ -43,6 +43,10 @@
 					"light": "resources/light/refresh.svg",
 					"dark": "resources/dark/refresh.svg"
 				}
+			},
+			{
+				"command": "nodeDependencies.refreshConfig",
+				"title": "Refresh Config"
 			},
 			{
 				"command": "nodeDependencies.addEntry",
