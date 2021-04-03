@@ -32,7 +32,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 		}
 
 		if (element) {
-			console.debug(element)
 			if (element.contextValue === 'leaf') {
 				return element.snippetNodes()
 			}
@@ -99,7 +98,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 					node.path = `${node.path}:0`
 				}
 			})
-			console.debug({ processed })
 			return new UINode(t, 'Template', processed, vscode.TreeItemCollapsibleState.Collapsed)
 		})
 	}

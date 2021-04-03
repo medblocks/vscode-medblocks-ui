@@ -9,6 +9,7 @@ export const getTransform = (workspace: string): TransformFunction => {
 		const configModule = require(configPath)
 		return configModule.default
 	} catch (e) {
+		console.debug(e)
 		return defaultTransform
 	}
 }
