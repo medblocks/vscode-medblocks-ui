@@ -2,17 +2,23 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 const visit = require('unist-util-visit')
+import defaultTransform, { TransformFunction } from './defaultTransform'
+import { getTransform } from './loadTransform';
 
 export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 	private _onDidChangeTreeData: vscode.EventEmitter<UINode | undefined | void> = new vscode.EventEmitter<UINode | undefined | void>();
 	readonly onDidChangeTreeData: vscode.Event<UINode | undefined | void> = this._onDidChangeTreeData.event;
 
-	constructor(private workspaceRoot: string) {
+	constructor(private workspaceRoot: string, private transform: TransformFunction) {
+
 	}
+
+
 
 	refresh(): void {
 		this._onDidChangeTreeData.fire();
+		this.transform = getTransform(this.workspaceRoot)
 	}
 
 	getTreeItem(element: UINode): vscode.TreeItem {
@@ -26,18 +32,28 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 		}
 
 		if (element) {
-			return element.data.children.map(child => {
-				const collapsable = child.children ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
+			console.debug(element)
+			if (element.contextValue === 'leaf') {
+				return element.snippetNodes()
+			}
 
-				const node = new UINode(child.id, child.rmType, child, collapsable)
-				if (!child.children) {
+			return element.data.children.map(child => {
+				vscode.TreeItemCollapsibleState.None
+				if (child.children && child.children.length) {
+					const node = new UINode(child.id, child.rmType, child, vscode.TreeItemCollapsibleState.Collapsed)
+					return node
+				}
+				else {
+					const uiSnippets = this.transform(child)
+					const collapsable = uiSnippets && uiSnippets.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
+					const node = new UINode(child.id, child.rmType, child, collapsable, uiSnippets)
 					node.contextValue = 'leaf'
 					node.iconPath = {
 						light: path.join(__filename, '..', '..', 'resources', 'light', 'number.svg'),
 						dark: path.join(__filename, '..', '..', 'resources', 'dark', 'number.svg')
-					};
+					}
+					return node
 				}
-				return node
 			})
 
 		} else {
@@ -104,13 +120,24 @@ export class UINode extends vscode.TreeItem {
 	constructor(
 		public readonly label: string,
 		private readonly type: string,
-		public readonly data: any,
+		public data: any,
 		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-		public readonly command?: vscode.Command
+		public readonly snippets?: any
 	) {
 		super(label, collapsibleState);
 
 		this.tooltip = `${this.label}-${this.type}`;
 		this.description = this.type;
+	}
+
+	async snippetNodes() {
+		if (this?.snippets?.length) {
+			return this.snippets.map((snippet) => {
+				const s = new UINode(snippet.name, '', { path: snippet.html }, vscode.TreeItemCollapsibleState.None)
+				s.contextValue = 'leaf';
+				return s
+			})
+		}
+		return []
 	}
 }
