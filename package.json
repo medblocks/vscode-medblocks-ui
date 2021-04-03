@@ -14,6 +14,7 @@
 		"onView:nodeDependencies"
 	],
 	"main": "./out/extension.js",
+	"icon": "icon.png",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [
