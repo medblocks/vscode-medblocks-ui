@@ -19,13 +19,14 @@ export function pathExists(p: string): boolean {
 
 export function getTransform(workspace: string): TransformFunction {
 	const configPath = path.join(workspace, 'medblocksui.config.js')
-
-	try {
-		delete require.cache[configPath]
-		const configModule = require(configPath)
-		return configModule.default
-	} catch (e) {
-		vscode.window.showErrorMessage("Error on loading medblocksui.config.js. Loading default config.")
-		return defaultTransform
+	if (pathExists(configPath)) {
+		try {
+			delete require.cache[configPath]
+			const configModule = require(configPath)
+			return configModule.default
+		} catch (e) {
+			vscode.window.showErrorMessage("Error on loading medblocksui.config.js. Loading default config.")
+		}
 	}
+	return defaultTransform
 }
