@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-const visit = require('unist-util-visit')
-import defaultTransform, { TransformFunction } from './defaultTransform'
+import * as visit from 'unist-util-visit'
+import { TransformFunction } from './defaultTransform'
 import { pathExists, getTransform } from './utils';
 
 export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
@@ -15,7 +15,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 	constructor(workspaceRoot: string, transform?: TransformFunction) {
 		this.workspaceRoot = workspaceRoot
-		this.transform = transform || getTransform(workspaceRoot)
+		this.transform = transform
 	}
 
 
@@ -24,8 +24,8 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 		this._onDidChangeTreeData.fire();
 	}
 
-	refreshConfig(): void {
-		this.transform = getTransform(this.workspaceRoot)
+	async refreshConfig() {
+		this.transform = await getTransform(this.workspaceRoot)
 	}
 
 	getTreeItem(element: UINode): vscode.TreeItem {

@@ -3,9 +3,10 @@
 import * as vscode from 'vscode';
 
 import { DepNodeProvider, UINode } from './nodeDependencies';
-export function activate(context: vscode.ExtensionContext) {
-
-	const nodeDependenciesProvider = new DepNodeProvider(vscode.workspace.rootPath);
+import { getTransform } from './utils';
+export async function activate(context: vscode.ExtensionContext) {
+	const configuration = await getTransform(vscode.workspace.rootPath)
+	const nodeDependenciesProvider = new DepNodeProvider(vscode.workspace.rootPath, configuration);
 	vscode.window.registerTreeDataProvider('nodeDependencies', nodeDependenciesProvider);
 	vscode.commands.registerCommand('nodeDependencies.refreshEntry', () => {
 		nodeDependenciesProvider.refreshConfig()
@@ -22,5 +23,4 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.workspace.onDidSaveTextDocument((e) => {
 		nodeDependenciesProvider.refresh()
 	})
-	vscode.commands.registerCommand('nodeDependencies.refreshConfig', () => nodeDependenciesProvider.refreshConfig())
 }

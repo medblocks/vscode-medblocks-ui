@@ -45,10 +45,6 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.refreshConfig",
-				"title": "Refresh Config"
-			},
-			{
 				"command": "nodeDependencies.addEntry",
 				"title": "Add"
 			},
