@@ -1,51 +1,38 @@
-# Views & View Containers
+# Medblocks UI VSCode Extension
 
-This sample demonstrates how to implement and contribute a tree view in VS Code. This includes:
+This extension is to help develop fast development of openEHR templates.
 
-- Contributing views and view containers.
-- Contributing actions in various location of the view.
-- Implementing the tree data provider for the view.
-- Creating and working with the view.
+## Setup
+1. Have a directory with all your webtemplates
+2. Open the medblocks-ui panel and explore the web template and copy paste snippets
 
-This sample provides following views
+## Configuration
+If you are using different web-component or want to include extra components, add a `medblocksui.config.js` file and add all the transformations like so
 
-- Node dependencies view
-- Ftp file explorer view
-
-Following example shows Node dependencies view in Package Explorer View container.
-
-![Package Explorer](./resources/package-explorer.png)
-
-## VS Code API
-
-This sample uses following contribution points, activation events and APIs
-
-### Contribution Points
-
-- `views`
-- `viewsContainers`
-- `menu`
-  - `view/title`
-  - `view/item/context`
-
-### Activation Events
-
-- `onView:${viewId}`
-
-### APIs
-
-- `window.createTreeView`
-- `window.registerTreeDataProvider`
-- `TreeView`
-- `TreeDataProvider`
-
-Refer to [Usage](./USAGE.md) document for more details.
-
-## Running the Sample
-
-- Open this example in VS Code Insiders
-- `npm install`
-- `npm run watch`
-- `F5` to start debugging
-- Node dependencies view is shown in Package explorer view container in Activity bar.
-- FTP file explorer view should be shown in Explorer
+```js
+module.exports.default = function transform(leaf) {
+    switch (leaf.rmType) {
+        case 'DV_QUANTITY':
+            return [{
+                name: 'mb-quantity',
+                html: `<mb-quantity path="${leaf.path}" default="kg" label="${leaf.name}">
+				${leaf.inputs[1].list.map(unit => `<mb-unit unit="${unit.value}" label="${unit.label}"></mb-unit>`).join('\n')}
+			</mb-quantity>`
+            },
+            {
+                name: 'extra-quantity',
+                html: 'another'
+            }
+            ]
+        case 'DV_CODED_TEXT':
+            return [
+                {
+                    name: 'My coded text component',
+                    html: '<mb-coded></mb-coded>'
+                }
+            ]
+        default:
+            return []
+    }
+}
+```

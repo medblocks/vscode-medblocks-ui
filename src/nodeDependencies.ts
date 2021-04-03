@@ -27,7 +27,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 	getChildren(element?: UINode): Thenable<UINode[]> {
 		if (!this.workspaceRoot) {
-			vscode.window.showInformationMessage('No templates in empty workspace');
 			return Promise.resolve([]);
 		}
 
