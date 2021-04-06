@@ -16,6 +16,12 @@
 	"main": "./out/extension.js",
 	"icon": "icon.png",
 	"contributes": {
+		"viewsWelcome": [
+			{
+				"view": "nodeDependencies",
+				"contents": "No templates folder found. Please add a templates folder and place your web templates inside."
+			}
+		],
 		"viewsContainers": {
 			"activitybar": [
 				{

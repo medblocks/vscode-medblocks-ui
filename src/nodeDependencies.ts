@@ -53,10 +53,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 					const collapsable = uiSnippets && uiSnippets.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
 					const node = new UINode(child.id, child.rmType, child, collapsable, uiSnippets)
 					node.contextValue = 'leaf'
-					node.iconPath = {
-						light: path.join(__filename, '..', '..', 'resources', 'light', 'number.svg'),
-						dark: path.join(__filename, '..', '..', 'resources', 'dark', 'number.svg')
-					}
+					node.iconPath = new vscode.ThemeIcon('circle-outline')
 					return node
 				}
 			})
