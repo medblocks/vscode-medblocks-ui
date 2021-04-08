@@ -12,6 +12,7 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 	workspaceRoot: string
 	transform: TransformFunction
+	textfile: string
 
 	constructor(workspaceRoot: string, transform?: TransformFunction) {
 		this.workspaceRoot = workspaceRoot
@@ -21,6 +22,10 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 
 	refresh(): void {
 		this._onDidChangeTreeData.fire();
+	}
+
+	setCurrentTextFile(file: string){
+		this.textfile = file
 	}
 
 	async refreshConfig() {
@@ -42,19 +47,24 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 			}
 
 			return element.data.children.map(child => {
-				vscode.TreeItemCollapsibleState.None
+				let node: UINode
 				if (child.children && child.children.length) {
-					const node = new UINode(child.id, child.rmType, child, vscode.TreeItemCollapsibleState.Collapsed)
-					return node
+					node = new UINode(child.id, child.rmType, child, vscode.TreeItemCollapsibleState.Collapsed)
 				}
 				else {
 					const uiSnippets = this.transform(child)
 					const collapsable = uiSnippets && uiSnippets.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
-					const node = new UINode(child.id, child.rmType, child, collapsable, uiSnippets)
+					node = new UINode(child.id, child.rmType, child, collapsable, uiSnippets)
 					node.contextValue = 'leaf'
-					node.iconPath = new vscode.ThemeIcon('circle-outline')
-					return node
 				}
+				const currentFile = vscode.workspace.workspaceFile
+
+				if (currentFile) {
+					const file = vscode.workspace.fs.readFile(currentFile)
+					console.debug(file)
+				}
+				node.iconPath = new vscode.ThemeIcon('circle-outline')
+				return node
 			})
 
 		} else {
@@ -141,7 +151,6 @@ export class UINode extends vscode.TreeItem {
 					}
 				}
 			})
-			console.log(snippets)
 			return snippets.join('\n')
 		}
 	}

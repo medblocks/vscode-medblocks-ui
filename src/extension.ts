@@ -20,6 +20,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerCommand('nodeDependencies.deleteEntry', (node: UINode) => vscode.window.showInformationMessage(`Successfully called delete entry on ${node.label}.`));
 
 	vscode.workspace.onDidSaveTextDocument((e) => {
+		console.debug(e.getText())
 		nodeDependenciesProvider.refresh()
+		nodeDependenciesProvider.setCurrentTextFile(e.getText())
 	})
 }
