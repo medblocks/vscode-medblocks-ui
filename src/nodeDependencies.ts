@@ -19,7 +19,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 	}
 
 
-
 	refresh(): void {
 		this._onDidChangeTreeData.fire();
 	}
@@ -109,7 +108,6 @@ export class DepNodeProvider implements vscode.TreeDataProvider<UINode> {
 }
 
 export class UINode extends vscode.TreeItem {
-
 	constructor(
 		public readonly label: string,
 		private readonly type: string,
@@ -123,11 +121,36 @@ export class UINode extends vscode.TreeItem {
 		this.description = this.type;
 	}
 
-	async snippetNodes() {
+	copyAction(transform: Function): string {
+		if (this.contextValue === 'leaf') {
+			const snippets = this.snippetNodes()
+			if (snippets?.length) {
+				return snippets[0].data
+			}
+		}
+		else if (this.contextValue === 'snippet') {
+			return this.data
+		}
+		else {
+			let snippets: string[] = []
+			visit(this.data, (node, index, parent) => {
+				if (!node.children) {
+					const nodeSnippets = transform(node)
+					if (nodeSnippets && nodeSnippets.length) {
+						snippets = [...snippets, nodeSnippets[0].html]
+					}
+				}
+			})
+			console.log(snippets)
+			return snippets.join('\n')
+		}
+	}
+
+	snippetNodes() {
 		if (this?.snippets?.length) {
 			return this.snippets.map((snippet) => {
-				const s = new UINode(snippet.name, '', { path: snippet.html }, vscode.TreeItemCollapsibleState.None)
-				s.contextValue = 'leaf';
+				const s = new UINode(snippet.name, '', snippet.html, vscode.TreeItemCollapsibleState.None)
+				s.contextValue = 'snippet';
 				return s
 			})
 		}

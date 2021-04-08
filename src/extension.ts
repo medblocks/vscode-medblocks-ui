@@ -14,8 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 	vscode.commands.registerCommand('extension.openPackageOnNpm', moduleName => vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`https://www.npmjs.com/package/${moduleName}`)));
 	vscode.commands.registerCommand('nodeDependencies.copy', async (node: UINode) => {
-		await vscode.env.clipboard.writeText(node.label)
-		vscode.env.clipboard.writeText(node.data.path)
+		vscode.env.clipboard.writeText(node.copyAction(nodeDependenciesProvider.transform))
 		vscode.window.showInformationMessage(`Copied ${node.label}.`)
 	});
 	vscode.commands.registerCommand('nodeDependencies.deleteEntry', (node: UINode) => vscode.window.showInformationMessage(`Successfully called delete entry on ${node.label}.`));

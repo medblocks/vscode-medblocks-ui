@@ -78,7 +78,7 @@
 			"view/item/context": [
 				{
 					"command": "nodeDependencies.copy",
-					"when": "view == nodeDependencies && viewItem == leaf",
+					"when": "view == nodeDependencies",
 					"group": "inline"
 				}
 			]
