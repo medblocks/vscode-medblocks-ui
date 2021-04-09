@@ -35,8 +35,8 @@ export class TemplateItem {
 	constructor(public tree: Tree, public label?: string) { }
 
 	getState(): 'present' | 'optionalAbsent' | 'mandatoryAbsent' {
+		return this.mandatory ? 'mandatoryAbsent' : 'optionalAbsent'
 		if (this.leaf) {
-			return this.mandatory ? 'mandatoryAbsent' : 'optionalAbsent'
 		}
 
 		else {

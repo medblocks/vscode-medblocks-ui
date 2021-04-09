@@ -117,65 +117,28 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 			if (element.children) {
 				return {
 					...element,
+					snippet: this.processSnippets(element),
+					status: this.processStatus(element),
 					children: element.children.map(child => preProcess(child, element))
 				}
 			} else {
-				return element
+				return {
+					...element,
+				}
+
 			}
 		}
 		return preProcess(tree, null)
 	}
 
+	private processSnippets(tree: Tree): string {
 
-}
-
-
-export class UINode extends vscode.TreeItem {
-	constructor(
-		public readonly label: string,
-		private readonly type: string,
-		public data: any,
-		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-		public readonly snippets?: any
-	) {
-		super(label, collapsibleState);
-
-		this.tooltip = `${this.label}-${this.type}`;
-		this.description = this.type;
 	}
 
-	copyAction(transform: Function): string {
-		if (this.contextValue === 'leaf') {
-			const snippets = this.snippetNodes()
-			if (snippets?.length) {
-				return snippets[0].data
-			}
-		}
-		else if (this.contextValue === 'snippet') {
-			return this.data
-		}
-		else {
-			let snippets: string[] = []
-			visit(this.data, (node, index, parent) => {
-				if (!node.children) {
-					const nodeSnippets = transform(node)
-					if (nodeSnippets && nodeSnippets.length) {
-						snippets = [...snippets, nodeSnippets[0].html]
-					}
-				}
-			})
-			return snippets.join('\n')
-		}
+	private processStatus(tree: Tree): 'present' | 'optionalAbsent' | 'mandatoryAbsent' {
+
 	}
 
-	snippetNodes() {
-		if (this?.snippets?.length) {
-			return this.snippets.map((snippet) => {
-				const s = new UINode(snippet.name, '', snippet.html, vscode.TreeItemCollapsibleState.None)
-				s.contextValue = 'snippet';
-				return s
-			})
-		}
-		return []
-	}
+
+
 }
