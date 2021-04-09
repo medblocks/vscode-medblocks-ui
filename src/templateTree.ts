@@ -12,15 +12,10 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 	private _onDidChangeTreeData: vscode.EventEmitter<TemplateSnippetItem | undefined | void> = new vscode.EventEmitter<TemplateSnippetItem | undefined | void>();
 	readonly onDidChangeTreeData: vscode.Event<TemplateSnippetItem | undefined | void> = this._onDidChangeTreeData.event;
 
-	workspaceRoot: string
-	transform: TransformFunction
-	textfile: string
 
-	constructor(workspaceRoot: string, transform?: TransformFunction) {
-		this.workspaceRoot = workspaceRoot
-		this.transform = transform
+	constructor(public workspaceRoot: string, public transform?: TransformFunction, public textfile: string = vscode.window.activeTextEditor?.document?.getText()) {
+
 	}
-
 
 	refresh(): void {
 		this._onDidChangeTreeData.fire();
@@ -103,7 +98,8 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 					const json = JSON.parse(string)
 					return new TemplateItem(this.process(json.tree), t)
 				}
-				catch {
+				catch (e) {
+					console.error(e)
 					return
 				}
 			}))
@@ -112,31 +108,87 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 
 
 	private process(tree: Tree): Tree {
+		let paths = []
 		const preProcess = (element, parent) => {
 			element.path = parent ? `${parent.path}/${element.id}` : element.id
+			paths = [...paths, element.path]
+			let node: Tree
 			if (element.children) {
-				return {
+				node = {
 					...element,
-					snippet: this.processSnippets(element),
-					status: this.processStatus(element),
 					children: element.children.map(child => preProcess(child, element))
 				}
 			} else {
-				return {
+				node = {
 					...element,
 				}
-
 			}
+			node = { ...node, status: this.processStatus(node) }
+			// console.log(this.processStatus(node))
+			return node
+
+			// const postProcess = (element) => {
+			// 	// console.log('running postprocess')
+			// 	if (element.children) {
+			// 		element.children.forEach(postProcess)
+			// 	}
+			// 	console.log('postprocess: ', element.path)
+			// }
 		}
-		return preProcess(tree, null)
+		const preprocessed = preProcess(tree, null)
+		return preprocessed
 	}
 
 	private processSnippets(tree: Tree): string {
-
+		return ''
 	}
 
-	private processStatus(tree: Tree): 'present' | 'optionalAbsent' | 'mandatoryAbsent' {
+	private processStatus(tree: Tree): 'present' | 'optionalAbsent' | 'mandatoryAbsent' | 'allPresent' {
+		const leaf = !tree?.children?.length
+		const mandatory = tree.min > 1
+		const present = this.pathPresent(tree.path)
 
+
+		if (leaf && present) {
+			return 'allPresent'
+		}
+
+		if (!present) {
+			return mandatory ? 'mandatoryAbsent' : 'optionalAbsent'
+		}
+		// Checks for group
+		const someChildrenNotPresent = tree.children.some(child => child.status !== 'allPresent')
+		if (mandatory) {
+			if (someChildrenNotPresent) {
+				if (tree.children.some(child => child.status === 'mandatoryAbsent')) {
+					return 'mandatoryAbsent'
+				} else {
+					return 'present'
+				}
+			} else {
+				return 'allPresent'
+			}
+		} else {
+			if (someChildrenNotPresent) {
+				if (tree.children.some(child => child.status === 'mandatoryAbsent')) {
+					if (tree.children.some(child => child.status !== 'optionalAbsent')) {
+						return 'mandatoryAbsent'
+					} else {
+						return 'optionalAbsent'
+					}
+				} else {
+					return 'present'
+				}
+			} else {
+				return 'allPresent'
+			}
+		}
+	}
+
+	private pathPresent(path: string): boolean {
+		const result = this.textfile.search(path) >= 0
+		return result
+		// return false
 	}
 
 

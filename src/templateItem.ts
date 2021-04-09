@@ -19,41 +19,29 @@ export interface Tree {
 	annotations?: {
 		[key: string]: string
 	}
-	children?: Tree[]
+	children?: Tree[],
+
+	// Added
+	path?: string
+	snippet?: string,
+	status?: 'present' | 'optionalAbsent' | 'mandatoryAbsent' | 'allPresent',
 }
 
 export class TemplateItem {
 	type: 'templateItem' = 'templateItem'
 
 	iconMap = {
-		present: 'pass-filled',
+		present: 'check',
 		optionalAbsent: 'debug-breakpoint-unverified',
-		mandatoryAbsent: 'issues'
+		mandatoryAbsent: 'issues',
+		allPresent: 'check-all'
 	}
 
 
 	constructor(public tree: Tree, public label?: string) { }
 
-	getState(): 'present' | 'optionalAbsent' | 'mandatoryAbsent' {
-		return this.mandatory ? 'mandatoryAbsent' : 'optionalAbsent'
-		if (this.leaf) {
-		}
-
-		else {
-			if (this.mandatory) {
-				return 'mandatoryAbsent'
-			}
-			const states = this.getChildren().map(child => child.getState())
-			if (states.some(state => state === 'mandatoryAbsent')) {
-				return 'mandatoryAbsent'
-			}
-
-			if (states.some(state => state === 'optionalAbsent')) {
-				return 'optionalAbsent'
-			}
-
-			return 'present'
-		}
+	get icon(): ThemeIcon {
+		return new ThemeIcon(this.iconMap[this.tree.status])
 	}
 
 	get displayLabel() {
@@ -64,7 +52,7 @@ export class TemplateItem {
 		const item = new TreeItem(this.displayLabel, this.collapsibleState)
 		item.tooltip = this.tooltip
 		item.description = this.tree.rmType.toLocaleLowerCase()
-		item.iconPath = new ThemeIcon(this.iconMap[this.getState()])
+		item.iconPath = this.icon
 		item.contextValue = 'leaf'
 		return item
 	}
@@ -103,17 +91,7 @@ export class TemplateItem {
 		}
 
 		else {
-			let snippets: string[] = []
-			// TODO
-			// visit(this.data, (node, index, parent) => {
-			// 	if (!node.children) {
-			// 		const nodeSnippets = transform(node)
-			// 		if (nodeSnippets && nodeSnippets.length) {
-			// 			snippets = [...snippets, nodeSnippets[0].html]
-			// 		}
-			// 	}
-			// })
-			return snippets.join('\n')
+			return this.tree.snippet
 		}
 	}
 

@@ -9,7 +9,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	const configuration = await getTransform(vscode.workspace.rootPath);
 	const templateTree = new TemplateTreeProvider(
 		vscode.workspace.rootPath,
-		configuration
+		configuration,
 	);
 	vscode.window.registerTreeDataProvider(
 		"nodeDependencies",
@@ -47,9 +47,13 @@ export async function activate(context: vscode.ExtensionContext) {
 	// 		)
 	// );
 
-	vscode.workspace.onDidChangeTextDocument((e) => {
-		console.debug(e)
-		templateTree.setCurrentTextFile(e.document.getText());
+	vscode.workspace.onDidChangeTextDocument(() => {
+		templateTree.setCurrentTextFile(vscode.window.activeTextEditor?.document.getText());
 		templateTree.refresh();
 	});
+
+	vscode.window.onDidChangeActiveTextEditor(() => {
+		templateTree.setCurrentTextFile(vscode.window.activeTextEditor?.document.getText());
+		templateTree.refresh();
+	})
 }
