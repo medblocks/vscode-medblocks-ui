@@ -63,8 +63,8 @@
 				}
 			},
 			{
-				"command": "nodeDependencies.deleteEntry",
-				"title": "Delete"
+				"command": "nodeDependencies.copyAql",
+				"title": "Copy AQL path"
 			}
 		],
 		"menus": {
@@ -80,6 +80,10 @@
 					"command": "nodeDependencies.copy",
 					"when": "view == nodeDependencies",
 					"group": "inline"
+				},
+				{
+					"command": "nodeDependencies.copyAql",
+					"when": "view == nodeDependencies && viewItem == leaf"
 				}
 			]
 		}

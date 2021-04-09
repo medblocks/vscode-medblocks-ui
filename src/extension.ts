@@ -3,7 +3,7 @@
 import * as vscode from "vscode";
 
 import { TemplateTreeProvider, TemplateSnippetItem } from "./templateTree";
-import { } from './templateItem'
+import { TemplateItem } from './templateItem'
 import { getTransform } from "./utils";
 export async function activate(context: vscode.ExtensionContext) {
 	const configuration = await getTransform(vscode.workspace.rootPath);
@@ -39,13 +39,13 @@ export async function activate(context: vscode.ExtensionContext) {
 
 		}
 	);
-	// vscode.commands.registerCommand(
-	// 	"nodeDependencies.deleteEntry",
-	// 	(node: UINode) =>
-	// 		vscode.window.showInformationMessage(
-	// 			`Successfully called delete entry on ${node.label}.`
-	// 		)
-	// );
+	vscode.commands.registerCommand(
+		"nodeDependencies.copyAql",
+		(node: TemplateItem) => {
+			vscode.env.clipboard.writeText(node.tree.aqlPath)
+			vscode.window.showInformationMessage(`Copied AQL of ${node.label}.`)
+		}
+	);
 
 	vscode.workspace.onDidChangeTextDocument(() => {
 		templateTree.setCurrentTextFile(vscode.window.activeTextEditor?.document.getText());
