@@ -48,30 +48,6 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 		} else {
 			return Promise.resolve(element.getChildren())
 		}
-
-		// return element.data.children.map(child => {
-		// 	let node: UINode
-		// 	if (child.children && child.children.length) {
-		// 		node = new UINode(child.id, child.rmType, child, vscode.TreeItemCollapsibleState.Collapsed)
-		// 	}
-		// 	else {
-		// 		const uiSnippets = this.transform(child)
-		// 		const collapsable = uiSnippets && uiSnippets.length ? vscode.TreeItemCollapsibleState.Collapsed : vscode.TreeItemCollapsibleState.None
-		// 		node = new UINode(child.id, child.rmType, child, collapsable, uiSnippets)
-		// 		node.contextValue = 'leaf'
-		// 	}
-		// 	const currentFile = vscode.workspace.workspaceFile
-
-		// 	if (currentFile) {
-		// 		const file = vscode.workspace.fs.readFile(currentFile)
-		// 		console.debug(file)
-		// 	}
-		// 	node.iconPath = new vscode.ThemeIcon('circle-outline')
-		// 	return node
-		// })
-
-
-
 	}
 
 	private getTemplatePaths(): string[] {
@@ -123,24 +99,24 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 					...element,
 				}
 			}
-			node = { ...node, status: this.processStatus(node) }
-			// console.log(this.processStatus(node))
+			node = {
+				...node,
+				status: this.processStatus(node),
+				snippet: this.processSnippets(node)
+			}
 			return node
-
-			// const postProcess = (element) => {
-			// 	// console.log('running postprocess')
-			// 	if (element.children) {
-			// 		element.children.forEach(postProcess)
-			// 	}
-			// 	console.log('postprocess: ', element.path)
-			// }
 		}
 		const preprocessed = preProcess(tree, null)
 		return preprocessed
 	}
 
 	private processSnippets(tree: Tree): string {
-		return ''
+		const leaf = !tree?.children?.length
+		if (leaf) {
+			return this.transform(tree)[0].html
+		} else {
+			return tree.children.map(child => child.snippet).join('\n')
+		}
 	}
 
 	private processStatus(tree: Tree): 'present' | 'optionalAbsent' | 'mandatoryAbsent' | 'allPresent' {

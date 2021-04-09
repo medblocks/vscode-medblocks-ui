@@ -1,23 +1,62 @@
+import { Tree } from "./templateItem"
 
 
-export type TransformFunction = (leaf: { path: string, rmType: string, [other: string]: any }) => { html: string, name: string }[]
+export type TransformFunction = (leaf: Tree) => { html: string, name: string }[]
 
 
-const transform: TransformFunction = (leaf) => {
-	switch (leaf.rmType) {
-		case 'DV_QUANTITY':
-			return [{
-				name: 'mb-quantity',
-				html: `<mb-quantity path="${leaf.path}" default="kg" label="${leaf.name}">
-				${leaf.inputs[1].list.map(unit => `<mb-unit unit="${unit.value}" label="${unit.label}"></mb-unit>`).join('\n')}
-			</mb-quantity>`
-			}
-			]
-		default:
-			return []
+const transformations = {
+	'DV_QUANTITY': (n) => [{
+		name: 'Quantity',
+		html: `<mb-quantity path="${n.path}" label="${n.name}">
+                ${n.inputs && n.inputs[1] && n.inputs[1].list ? n.inputs[1].list.map(unit => `<mb-unit unit="${unit.value}" label="${unit.label}"></mb-unit>`).join('\n') : ''}
+            </mb-quantity>`
+	},
+	{
+		name: 'Hello there',
+		html: 'Hi I am a Quantity'
 	}
+	],
+	'DV_CODED_TEXT': (n) => [
+		{
+			name: 'Select',
+			html: `<mb-select path="${n.path}" label="${n.name || ''}">
+            ${n.inputs && n.inputs[0] && n.inputs[0].list ? n.inputs[0].list.map(option => `<mb-option code="${option.value}" display="${option.label}"></mb-option>`).join('\n') : ''}
+          </mb-select>`
+		}
+	],
+	'DV_COUNT': (n) => [
+
+	],
+	'DV_TEXT': (n) => [
+		{ name: 'Input', html: `<mb-input path="${n.path}" label="${n.name || ''}"></mb-input>` },
+		{ name: 'Textarea', html: `<mb-input textarea path="${n.path}" label="${n.name || ''}"></mb-input>` }
+	],
+	'DV_DATE_TIME': (n) => [
+		{ name: 'Date & Time', html: `<mb-date time path="${n.path}" label="${n.name || ''}"></mb-date>` },
+		{ name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>` }
+	],
+	'DV_DATE': (n) => [
+		{ name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>` },
+	],
+	'context': (n) => [
+		{ name: 'Context', html: `<mb-context path=${n.path}></mb-context>` }
+	],
+	// 'wrapper': (html) => `<div class="field">${html}</div>`
 
 }
 
-
-export default transform
+export default (leaf) => {
+	if (leaf['inContext']) {
+		return transformations['context'](leaf)
+	}
+	const fn = transformations[leaf.rmType]
+	if (fn) {
+		const nodes = fn(leaf)
+		const wrapper = transformations['wrapper']
+		if (wrapper) {
+			return nodes.map(node => ({ ...node, html: wrapper(node.html) }))
+		}
+		return nodes
+	}
+	return []
+}

@@ -21,6 +21,7 @@ export interface Tree {
 	}
 	children?: Tree[],
 
+	[other: string]: any
 	// Added
 	path?: string
 	snippet?: string,
