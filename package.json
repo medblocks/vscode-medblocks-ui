@@ -1,6 +1,6 @@
 {
-	"name": "medblocks-ui",
-	"displayName": "Medblocks UI",
+	"name": "vscode-medblocks-ui",
+	"displayName": "Medblocks UI VsCode Extension",
 	"description": "Fast path resolution and snippets for Medblocks UI",
 	"version": "0.0.7",
 	"publisher": "tornadoalert",
@@ -11,14 +11,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onView:nodeDependencies"
+		"onView:templateTree"
 	],
 	"main": "./out/extension.js",
 	"icon": "icon.png",
 	"contributes": {
 		"viewsWelcome": [
 			{
-				"view": "nodeDependencies",
+				"view": "templateTree",
 				"contents": "No templates folder found. Please add a templates folder and place your web templates inside."
 			}
 		],
@@ -34,7 +34,7 @@
 		"views": {
 			"package-explorer": [
 				{
-					"id": "nodeDependencies",
+					"id": "templateTree",
 					"name": "Templates",
 					"icon": "media/dep.svg",
 					"contextualTitle": "Package Explorer"
@@ -43,47 +43,46 @@
 		},
 		"commands": [
 			{
-				"command": "nodeDependencies.refreshEntry",
+				"command": "templateTree.refreshEntry",
 				"title": "Refresh",
 				"icon": {
 					"light": "resources/light/refresh.svg",
 					"dark": "resources/dark/refresh.svg"
-				}
+				},
+				"category": "Medblocks UI"
 			},
 			{
-				"command": "nodeDependencies.addEntry",
-				"title": "Add"
-			},
-			{
-				"command": "nodeDependencies.copy",
+				"command": "templateTree.copy",
 				"title": "Copy",
 				"icon": {
 					"light": "resources/light/files.svg",
 					"dark": "resources/dark/files.svg"
-				}
+				},
+				"category": "Medblocks UI"
 			},
 			{
-				"command": "nodeDependencies.copyAql",
-				"title": "Copy AQL path"
+				"command": "templateTree.copyAql",
+				"title": "Copy AQL path",
+				"category": "Medblocks UI"
 			}
 		],
 		"menus": {
 			"view/title": [
 				{
-					"command": "nodeDependencies.refreshEntry",
-					"when": "view == nodeDependencies",
+					"command": "templateTree.refreshEntry",
+					"when": "view == templateTree",
 					"group": "navigation"
 				}
 			],
 			"view/item/context": [
 				{
-					"command": "nodeDependencies.copy",
-					"when": "view == nodeDependencies",
+					"command": "templateTree.copy",
+					"when": "view == templateTree",
 					"group": "inline"
 				},
 				{
-					"command": "nodeDependencies.copyAql",
-					"when": "view == nodeDependencies && viewItem == leaf"
+					"command": "templateTree.copyAql",
+					"when": "view == templateTree && viewItem == leaf"
 				}
 			]
 		}

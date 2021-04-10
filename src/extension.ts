@@ -12,35 +12,29 @@ export async function activate(context: vscode.ExtensionContext) {
 		configuration,
 	);
 	vscode.window.registerTreeDataProvider(
-		"nodeDependencies",
+		"templateTree",
 		templateTree
 	);
-	vscode.commands.registerCommand("nodeDependencies.refreshEntry", () => {
+	vscode.commands.registerCommand("templateTree.refreshEntry", () => {
 		templateTree.refreshConfig();
 		templateTree.refresh();
 	});
-	vscode.commands.registerCommand("extension.openPackageOnNpm", (moduleName) =>
-		vscode.commands.executeCommand(
-			"vscode.open",
-			vscode.Uri.parse(`https://www.npmjs.com/package/${moduleName}`)
-		)
-	);
+
 	vscode.commands.registerCommand(
-		"nodeDependencies.copy",
+		"templateTree.copy",
 		async (node: TemplateSnippetItem) => {
+			vscode.env.clipboard.writeText(node.copy())
 			if (node.type === 'templateItem') {
-				vscode.env.clipboard.writeText(node.copy(templateTree.transform))
 				vscode.window.showInformationMessage(`Copied ${node.displayLabel}.`);
 			}
 			else {
-				vscode.env.clipboard.writeText(node.copy())
 				vscode.window.showInformationMessage(`Copied snippet ${node.snipppet.name}.`);
 			}
 
 		}
 	);
 	vscode.commands.registerCommand(
-		"nodeDependencies.copyAql",
+		"templateTree.copyAql",
 		(node: TemplateItem) => {
 			vscode.env.clipboard.writeText(node.tree.aqlPath)
 			vscode.window.showInformationMessage(`Copied AQL of ${node.label}.`)

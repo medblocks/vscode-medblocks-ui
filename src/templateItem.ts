@@ -13,7 +13,7 @@ export interface Tree {
 	localizedNames?: {
 		[key: string]: string
 	}
-	localizedDescription?: {
+	localizedDescriptions?: {
 		[key: string]: string
 	},
 	annotations?: {
@@ -59,10 +59,22 @@ export class TemplateItem {
 	}
 
 	get tooltip(): string {
-		const exclude = ['children', 'inputs']
-		return Object.entries(this.tree).map(([key, value]) => {
+		const exclude = ['children', 'inputs', 'snippet', 'localizedName', 'localizedDescriptions']
+		const tree = { ...this.tree, description: this.tree?.localizedDescriptions?.['en'] }
+		const statusDescriptions = {
+			'allPresent': "All child elements are present",
+			'optionalAbsent': "The element is optional, it's currently absent in this document",
+			'mandatoryAbsent': "This element (or some children) is mandatory, but is absent in the current document",
+			'present': "All mandatory child elements are present"
+		}
+		const str = `${tree.name || tree.id} | ${tree.rmType}
+${tree.min}..${tree.max === -1 ? '*' : tree.max}
+${statusDescriptions[tree.status]}
+Path: ${tree.path}${tree.description ? `\nDescription: ${tree.description}\n` : ''}${tree.aqlPath ? `AQL Path: ${tree.aqlPath}\n` : ''}`
+		return str
+		return Object.entries(tree).map(([key, value]) => {
 			if (!exclude.includes(key)) {
-				return `${key}: ${JSON.stringify(value)}`
+				return `${key}: ${value}`
 			}
 		}).filter(n => n).join('\n')
 	}
@@ -83,17 +95,8 @@ export class TemplateItem {
 		return this.tree.children.map(child => new TemplateItem(child))
 	}
 
-	copy(transform: Function): string {
-		if (this.leaf) {
-			const snippets = this.getSnippets(transform)
-			if (snippets?.length) {
-				return snippets[0].snipppet.html
-			}
-		}
-
-		else {
-			return this.tree.snippet
-		}
+	copy(): string {
+		return this.tree.snippet
 	}
 
 	getSnippets(transform: Function): Snippet[] {
