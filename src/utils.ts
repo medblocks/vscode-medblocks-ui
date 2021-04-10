@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import * as vscode from 'vscode';
 import * as path from 'path';
 import defaultTransform from './defaultTransform'
 import type { TransformFunction } from './defaultTransform'

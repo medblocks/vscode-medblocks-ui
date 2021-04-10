@@ -104,14 +104,7 @@
 		"eslint": "^7.21.0",
 		"typescript": "^4.2.2"
 	},
-	"dependencies": {
-		"ftp": "^0.3.10",
-		"jsonc-parser": "^0.4.2",
-		"minimist": "^0.2.1",
-		"mkdirp": "^0.5.1",
-		"rimraf": "^2.6.2",
-		"unist-util-visit": "^2.0.3"
-	},
+	"dependencies": {},
 	"repository": {
 		"url": "https://github.com/sidharthramesh/vscode-medblocks-ui.git"
 	}

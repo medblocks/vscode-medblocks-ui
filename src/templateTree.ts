@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as visit from 'unist-util-visit'
 import { TransformFunction } from './defaultTransform'
 import { pathExists, getTransform } from './utils';
 import { TemplateItem, Snippet, Tree } from './templateItem';
