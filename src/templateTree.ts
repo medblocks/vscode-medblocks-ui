@@ -86,6 +86,9 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 		let paths = []
 		const preProcess = (element, parent) => {
 			element.path = parent ? `${parent.path}/${element.id}` : element.id
+			if (element.max === -1 || element.max > 1) {
+				element.path = `${element.path}:0`
+			}
 			paths = [...paths, element.path]
 			let node: Tree
 			if (element.children) {
@@ -120,7 +123,7 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 
 	private processStatus(tree: Tree): 'present' | 'optionalAbsent' | 'mandatoryAbsent' | 'allPresent' {
 		const leaf = !tree?.children?.length
-		const mandatory = tree.min > 1
+		const mandatory = tree.min >= 1
 		const present = this.pathPresent(tree.path)
 
 
@@ -134,6 +137,10 @@ export class TemplateTreeProvider implements vscode.TreeDataProvider<TemplateSni
 		// Checks for group
 		const someChildrenNotPresent = tree.children.some(child => child.status !== 'allPresent')
 		if (mandatory) {
+			if (!present) {
+
+				return 'mandatoryAbsent'
+			}
 			if (someChildrenNotPresent) {
 				if (tree.children.some(child => child.status === 'mandatoryAbsent')) {
 					return 'mandatoryAbsent'
