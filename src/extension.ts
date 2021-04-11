@@ -37,9 +37,18 @@ export async function activate(context: vscode.ExtensionContext) {
 		"templateTree.copyAql",
 		(node: TemplateItem) => {
 			vscode.env.clipboard.writeText(node.tree.aqlPath)
-			vscode.window.showInformationMessage(`Copied AQL of ${node.label}.`)
+			vscode.window.showInformationMessage(`Copied AQL of ${node.displayLabel}.`)
 		}
 	);
+	vscode.commands.registerCommand("templateTree.copyPath", (node: TemplateItem) => {
+		vscode.env.clipboard.writeText(node.tree.path)
+		vscode.window.showInformationMessage(`Copied path for ${node.displayLabel}.`)
+	})
+
+	vscode.commands.registerCommand("templateTree.copyRegex", (node: TemplateItem) => {
+		vscode.env.clipboard.writeText(node.getRegex())
+		vscode.window.showInformationMessage(`Copied Regex for ${node.displayLabel}.`)
+	})
 
 	vscode.workspace.onDidChangeTextDocument(() => {
 		templateTree.setCurrentTextFile(vscode.window.activeTextEditor?.document.getText());

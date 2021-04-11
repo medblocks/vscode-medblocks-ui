@@ -24,7 +24,8 @@ export interface Tree {
 	[other: string]: any
 	// Added
 	path?: string
-	regex?: string | RegExp
+	runtimeRegex?: string
+	regex?: string
 	snippet?: string,
 	status?: 'present' | 'optionalAbsent' | 'mandatoryAbsent' | 'allPresent',
 }
@@ -71,13 +72,9 @@ export class TemplateItem {
 		const str = `${tree.name || tree.id} | ${tree.rmType}
 ${tree.min}..${tree.max === -1 ? '*' : tree.max}
 ${statusDescriptions[tree.status]}
-Path: ${tree.path}${tree.description ? `\nDescription: ${tree.description}\n` : ''}${tree.aqlPath ? `AQL Path: ${tree.aqlPath}\n` : ''}`
+Path: ${tree.path}
+${tree.description ? `Description: ${tree.description}\n` : ''}${tree.aqlPath ? `AQL Path: ${tree.aqlPath}\n` : ''}`
 		return str
-		return Object.entries(tree).map(([key, value]) => {
-			if (!exclude.includes(key)) {
-				return `${key}: ${value}`
-			}
-		}).filter(n => n).join('\n')
 	}
 
 	get collapsibleState() {
@@ -107,6 +104,11 @@ Path: ${tree.path}${tree.description ? `\nDescription: ${tree.description}\n` : 
 		const snippets = transform(this.tree)
 		return snippets.map(s => new Snippet(s))
 	}
+
+	getRegex(): string {
+		return new RegExp(this.tree.regex).toString()
+	}
+
 }
 
 export class Snippet {

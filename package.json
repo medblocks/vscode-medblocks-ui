@@ -64,9 +64,37 @@
 				"command": "templateTree.copyAql",
 				"title": "Copy AQL path",
 				"category": "Medblocks UI"
+			},
+			{
+				"command": "templateTree.copyPath",
+				"title": "Copy Path",
+				"category": "Medblocks UI"
+			},
+			{
+				"command": "templateTree.copyRegex",
+				"title": "Copy Regex",
+				"category": "Medblocks UI"
 			}
 		],
 		"menus": {
+			"commandPalette": [
+				{
+					"command": "templateTree.copy",
+					"when": "false"
+				},
+				{
+					"command": "templateTree.copyAql",
+					"when": "false"
+				},
+				{
+					"command": "templateTree.copyRegex",
+					"when": "false"
+				},
+				{
+					"command": "templateTree.copyPath",
+					"when": "false"
+				}
+			],
 			"view/title": [
 				{
 					"command": "templateTree.refreshEntry",
@@ -82,6 +110,14 @@
 				},
 				{
 					"command": "templateTree.copyAql",
+					"when": "view == templateTree && viewItem == leaf"
+				},
+				{
+					"command": "templateTree.copyRegex",
+					"when": "view == templateTree && viewItem == leaf"
+				},
+				{
+					"command": "templateTree.copyPath",
 					"when": "view == templateTree && viewItem == leaf"
 				}
 			]
