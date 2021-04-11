@@ -24,6 +24,7 @@ export interface Tree {
 	[other: string]: any
 	// Added
 	path?: string
+	regex?: string | RegExp
 	snippet?: string,
 	status?: 'present' | 'optionalAbsent' | 'mandatoryAbsent' | 'allPresent',
 }
