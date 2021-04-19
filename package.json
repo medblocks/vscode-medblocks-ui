@@ -1,152 +1,152 @@
 {
-	"name": "medblocks-ui",
-	"displayName": "Medblocks UI VsCode Extension",
-	"description": "Fast path resolution and snippets for Medblocks UI",
-	"version": "0.0.14",
-	"publisher": "tornadoalert",
-	"engines": {
-		"vscode": "^1.52.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onView:templateTree"
-	],
-	"main": "./out/extension.js",
-	"icon": "icon.png",
-	"contributes": {
-		"viewsWelcome": [
-			{
-				"view": "templateTree",
-				"contents": "No templates folder found. Please add a templates folder and place your web templates inside."
-			}
-		],
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "package-explorer",
-					"title": "Medblocks UI",
-					"icon": "media/dep.svg"
-				}
-			]
-		},
-		"views": {
-			"package-explorer": [
-				{
-					"id": "templateTree",
-					"name": "Templates",
-					"icon": "media/dep.svg",
-					"contextualTitle": "Package Explorer"
-				}
-			]
-		},
-		"commands": [
-			{
-				"command": "templateTree.refreshEntry",
-				"title": "Refresh",
-				"icon": {
-					"light": "resources/light/refresh.svg",
-					"dark": "resources/dark/refresh.svg"
-				},
-				"category": "Medblocks UI"
-			},
-			{
-				"command": "templateTree.copy",
-				"title": "Copy Snippet",
-				"icon": {
-					"light": "resources/light/files.svg",
-					"dark": "resources/dark/files.svg"
-				},
-				"category": "Medblocks UI"
-			},
-			{
-				"command": "templateTree.copyAql",
-				"title": "Copy AQL path",
-				"category": "Medblocks UI"
-			},
-			{
-				"command": "templateTree.copyPath",
-				"title": "Copy Path",
-				"category": "Medblocks UI"
-			},
-			{
-				"command": "templateTree.copyRegex",
-				"title": "Copy Regex",
-				"category": "Medblocks UI"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "templateTree.copy",
-					"when": "false"
-				},
-				{
-					"command": "templateTree.copyAql",
-					"when": "false"
-				},
-				{
-					"command": "templateTree.copyRegex",
-					"when": "false"
-				},
-				{
-					"command": "templateTree.copyPath",
-					"when": "false"
-				}
-			],
-			"view/title": [
-				{
-					"command": "templateTree.refreshEntry",
-					"when": "view == templateTree",
-					"group": "navigation"
-				}
-			],
-			"view/item/context": [
-				{
-					"command": "templateTree.copy",
-					"when": "view == templateTree",
-					"group": "inline"
-				},
-				{
-					"command": "templateTree.copy",
-					"when": "view == templateTree"
-				},
-				{
-					"command": "templateTree.copyAql",
-					"when": "view == templateTree && viewItem == leaf"
-				},
-				{
-					"command": "templateTree.copyRegex",
-					"when": "view == templateTree && viewItem == leaf"
-				},
-				{
-					"command": "templateTree.copyPath",
-					"when": "view == templateTree && viewItem == leaf"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"lint": "eslint . --ext .ts,.tsx",
-		"publish": "standard-version && vsce publish"
-	},
-	"devDependencies": {
-		"@types/mkdirp": "^0.5.2",
-		"@types/node": "^12.12.0",
-		"@types/rimraf": "^2.0.2",
-		"@types/vscode": "^1.45.0",
-		"@typescript-eslint/eslint-plugin": "^4.16.0",
-		"@typescript-eslint/parser": "^4.16.0",
-		"eslint": "^7.21.0",
-		"standard-version": "^9.2.0",
-		"typescript": "^4.2.2"
-	},
-	"dependencies": {},
-	"repository": {
-		"url": "https://github.com/sidharthramesh/vscode-medblocks-ui.git"
-	}
+  "name": "medblocks-ui",
+  "displayName": "Medblocks UI VsCode Extension",
+  "description": "Fast path resolution and snippets for Medblocks UI",
+  "version": "0.0.14",
+  "publisher": "tornadoalert",
+  "engines": {
+    "vscode": "^1.52.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:templateTree"
+  ],
+  "main": "./out/extension.js",
+  "icon": "icon.png",
+  "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "templateTree",
+        "contents": "No templates folder found. Please add a templates folder and place your web templates inside."
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "package-explorer",
+          "title": "Medblocks UI",
+          "icon": "media/dep.svg"
+        }
+      ]
+    },
+    "views": {
+      "package-explorer": [
+        {
+          "id": "templateTree",
+          "name": "Templates",
+          "icon": "media/dep.svg",
+          "contextualTitle": "Package Explorer"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "templateTree.refreshEntry",
+        "title": "Refresh",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        },
+        "category": "Medblocks UI"
+      },
+      {
+        "command": "templateTree.copy",
+        "title": "Copy Snippet",
+        "icon": {
+          "light": "resources/light/files.svg",
+          "dark": "resources/dark/files.svg"
+        },
+        "category": "Medblocks UI"
+      },
+      {
+        "command": "templateTree.copyAql",
+        "title": "Copy AQL path",
+        "category": "Medblocks UI"
+      },
+      {
+        "command": "templateTree.copyPath",
+        "title": "Copy Path",
+        "category": "Medblocks UI"
+      },
+      {
+        "command": "templateTree.copyRegex",
+        "title": "Copy Regex",
+        "category": "Medblocks UI"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "templateTree.copy",
+          "when": "false"
+        },
+        {
+          "command": "templateTree.copyAql",
+          "when": "false"
+        },
+        {
+          "command": "templateTree.copyRegex",
+          "when": "false"
+        },
+        {
+          "command": "templateTree.copyPath",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "templateTree.refreshEntry",
+          "when": "view == templateTree",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "templateTree.copy",
+          "when": "view == templateTree",
+          "group": "inline"
+        },
+        {
+          "command": "templateTree.copy",
+          "when": "view == templateTree"
+        },
+        {
+          "command": "templateTree.copyAql",
+          "when": "view == templateTree && viewItem == leaf"
+        },
+        {
+          "command": "templateTree.copyRegex",
+          "when": "view == templateTree && viewItem == leaf"
+        },
+        {
+          "command": "templateTree.copyPath",
+          "when": "view == templateTree && viewItem == leaf"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint . --ext .ts,.tsx",
+    "publish": "standard-version && vsce publish"
+  },
+  "devDependencies": {
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^12.12.0",
+    "@types/rimraf": "^2.0.2",
+    "@types/vscode": "^1.45.0",
+    "@typescript-eslint/eslint-plugin": "^4.16.0",
+    "@typescript-eslint/parser": "^4.16.0",
+    "eslint": "^7.21.0",
+    "standard-version": "^9.2.0",
+    "typescript": "^4.2.2"
+  },
+  "dependencies": {},
+  "repository": {
+    "url": "https://github.com/sidharthramesh/vscode-medblocks-ui.git"
+  }
 }

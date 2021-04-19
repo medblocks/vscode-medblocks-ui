@@ -1,27 +1,24 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import defaultTransform from './defaultTransform'
-import type { TransformFunction } from './defaultTransform'
-
+import * as fs from "fs";
+import * as path from "path";
+import defaultTransform from "./defaultTransform";
+import type { TransformFunction } from "./defaultTransform";
 
 export function pathExists(p: string): boolean {
-	try {
-		fs.accessSync(p);
-	} catch (err) {
-		return false;
-	}
+  try {
+    fs.accessSync(p);
+  } catch (err) {
+    return false;
+  }
 
-	return true;
+  return true;
 }
 
-
-
 export function getTransform(workspace: string): TransformFunction {
-	const configPath = path.join(workspace, 'medblocksui.config.cjs')
-	if (pathExists(configPath)) {
-		delete require.cache[configPath]
-		const configModule = require(configPath)
-		return configModule.default
-	}
-	return defaultTransform
+  const configPath = path.join(workspace, "medblocksui.config.cjs");
+  if (pathExists(configPath)) {
+    delete require.cache[configPath];
+    const configModule = require(configPath);
+    return configModule.default;
+  }
+  return defaultTransform;
 }
