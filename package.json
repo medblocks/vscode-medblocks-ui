@@ -74,6 +74,11 @@
         "command": "templateTree.copyRegex",
         "title": "Copy Regex",
         "category": "Medblocks UI"
+      },
+      {
+        "command": "templateTree.copyContext",
+        "title": "Copy Context",
+        "category": "Medblocks UI"
       }
     ],
     "menus": {
@@ -92,6 +97,10 @@
         },
         {
           "command": "templateTree.copyPath",
+          "when": "false"
+        },
+        {
+          "command": "templateTree.copyContext",
           "when": "false"
         }
       ],
@@ -122,6 +131,10 @@
         },
         {
           "command": "templateTree.copyPath",
+          "when": "view == templateTree && viewItem == leaf"
+        },
+        {
+          "command": "templateTree.copyContext",
           "when": "view == templateTree && viewItem == leaf"
         }
       ]
