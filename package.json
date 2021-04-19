@@ -53,7 +53,7 @@
 			},
 			{
 				"command": "templateTree.copy",
-				"title": "Copy",
+				"title": "Copy Snippet",
 				"icon": {
 					"light": "resources/light/files.svg",
 					"dark": "resources/dark/files.svg"
@@ -107,6 +107,10 @@
 					"command": "templateTree.copy",
 					"when": "view == templateTree",
 					"group": "inline"
+				},
+				{
+					"command": "templateTree.copy",
+					"when": "view == templateTree"
 				},
 				{
 					"command": "templateTree.copyAql",
