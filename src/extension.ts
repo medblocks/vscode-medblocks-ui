@@ -42,9 +42,11 @@ export async function activate(context: vscode.ExtensionContext) {
   vscode.commands.registerCommand(
     "templateTree.copyContext",
     (node: TemplateItem) => {
-      vscode.env.clipboard.writeText(node.copy());
+      vscode.env.clipboard.writeText(
+        node.tree.aqlPath.includes("context") ? node.copy() : null
+      );
       vscode.window.showInformationMessage(
-        `Copied AQL of ${node.displayLabel}.`
+        `Copied Context snippets of ${node.displayLabel}.`
       );
     }
   );

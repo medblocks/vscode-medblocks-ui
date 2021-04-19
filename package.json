@@ -135,7 +135,7 @@
         },
         {
           "command": "templateTree.copyContext",
-          "when": "view == templateTree && viewItem == leaf"
+          "when": "view == templateTree"
         }
       ]
     }

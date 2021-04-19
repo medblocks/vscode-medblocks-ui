@@ -137,12 +137,17 @@ export class TemplateTreeProvider
   private processContext(tree: Tree) {
     const leaf = !tree?.children?.length;
     if (leaf) {
-      return this.transform(tree)[0].html;
+      if (tree.aqlPath.includes("context")) {
+        console.debug(this.transform(tree)[0].html);
+        return this.transform(tree)[0].html;
+      } else {
+        return null;
+      }
     } else {
       return tree.children
         .map((child) => {
-          if (child.inContext) {
-            console.debug(child);
+          if (child.aqlPath.includes("context")) {
+            console.debug(child.snippet);
             return child.snippet;
           }
         })
