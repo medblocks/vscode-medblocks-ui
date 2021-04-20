@@ -120,6 +120,14 @@ ${tree.description ? `Description: ${tree.description}\n` : ""}${
   getRegex(): string {
     return new RegExp(this.tree.regex).toString();
   }
+  getContext() {
+    if (!this.leaf) {
+      const tree = this.tree.children.map((t) => {
+        if (t.inContext) return t.snippet;
+      });
+      return tree.join("\n");
+    } else return this.tree.inContext ? this.tree.snippet : null;
+  }
 }
 
 export class Snippet {
