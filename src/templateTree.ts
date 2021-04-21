@@ -141,13 +141,12 @@ export class TemplateTreeProvider
         return this.transform(tree)[0].html;
       }
     } else {
-      return tree.children
-        .map((child) => {
-          if (child.inContext) {
-            return child.snippet;
-          }
-        })
-        .join("\n");
+      const contextSnippet = tree.children
+        .filter((child) => child.snippet)
+        .map((child) => child.context);
+      if (contextSnippet.length > 0) {
+        return contextSnippet.join("\n");
+      }
     }
   }
 
