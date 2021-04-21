@@ -40,6 +40,13 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   );
   vscode.commands.registerCommand(
+    "templateTree.copyContext",
+    (node: TemplateItem) => {
+      vscode.env.clipboard.writeText(node.getContext());
+      vscode.window.showInformationMessage(`Copied ${node.displayLabel}.`);
+    }
+  );
+  vscode.commands.registerCommand(
     "templateTree.copyPath",
     (node: TemplateItem) => {
       vscode.env.clipboard.writeText(node.tree.path);

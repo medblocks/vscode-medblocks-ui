@@ -27,6 +27,7 @@ export interface Tree {
   runtimeRegex?: string;
   regex?: string;
   snippet?: string;
+  context?: string;
   status?: "present" | "optionalAbsent" | "mandatoryAbsent" | "allPresent";
 }
 
@@ -119,6 +120,9 @@ ${tree.description ? `Description: ${tree.description}\n` : ""}${
 
   getRegex(): string {
     return new RegExp(this.tree.regex).toString();
+  }
+  getContext() {
+    return this.tree.context;
   }
 }
 

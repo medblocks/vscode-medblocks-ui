@@ -118,6 +118,7 @@ export class TemplateTreeProvider
         ...node,
         status: this.processStatus(node),
         snippet: this.processSnippets(node),
+        context: this.processContext(node),
       };
       return node;
     };
@@ -131,6 +132,21 @@ export class TemplateTreeProvider
       return this.transform(tree)[0].html;
     } else {
       return tree.children.map((child) => child.snippet).join("\n");
+    }
+  }
+  private processContext(tree: Tree) {
+    const leaf = !tree?.children?.length;
+    if (leaf) {
+      if (tree.inContext) {
+        return this.transform(tree)[0].html;
+      }
+    } else {
+      const contextSnippet = tree.children
+        .filter((child) => child.context)
+        .map((child) => child.context);
+      if (contextSnippet.length > 0) {
+        return contextSnippet.join("\n");
+      }
     }
   }
 
