@@ -142,7 +142,7 @@ export class TemplateTreeProvider
       }
     } else {
       const contextSnippet = tree.children
-        .filter((child) => child.snippet)
+        .filter((child) => child.context)
         .map((child) => child.context);
       if (contextSnippet.length > 0) {
         return contextSnippet.join("\n");
