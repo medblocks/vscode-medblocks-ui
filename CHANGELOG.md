@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.14...v0.0.15) (2021-04-25)
+
+
+### Bug Fixes
+
+* changed copy to copy snippet ([a8c7fa3](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/a8c7fa33ce1a13f38272ea753b345ed2363935f7))
+
 ### [0.0.14](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.13...v0.0.14) (2021-04-12)
 
 ### [0.0.13](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.12...v0.0.13) (2021-04-11)
