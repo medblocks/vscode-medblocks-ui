@@ -31,6 +31,14 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   );
   vscode.commands.registerCommand(
+    "templateTree.copyId",
+    (node: TemplateItem) => {
+      vscode.env.clipboard.writeText(node.tree.id);
+      vscode.window.showInformationMessage(`Copied ID of ${node.displayLabel}`);
+    }
+  );
+
+  vscode.commands.registerCommand(
     "templateTree.copyAql",
     (node: TemplateItem) => {
       vscode.env.clipboard.writeText(node.tree.aqlPath);

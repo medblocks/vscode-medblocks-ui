@@ -61,13 +61,22 @@
         "category": "Medblocks UI"
       },
       {
-        "command": "templateTree.copyAql",
-        "title": "Copy AQL path",
-        "category": "Medblocks UI"
+        "command": "templateTree.copyId",
+        "title": "Copy ID",
+        "category": "Medblocks UI",
+        "icon": {
+          "light": "resources/light/string.svg",
+          "dark": "resources/dark/string.svg"
+        }
       },
       {
         "command": "templateTree.copyPath",
         "title": "Copy Path",
+        "category": "Medblocks UI"
+      },
+      {
+        "command": "templateTree.copyAql",
+        "title": "Copy AQL path",
         "category": "Medblocks UI"
       },
       {
@@ -85,6 +94,10 @@
       "commandPalette": [
         {
           "command": "templateTree.copy",
+          "when": "false"
+        },
+        {
+          "command": "templateTree.copyId",
           "when": "false"
         },
         {
@@ -113,20 +126,16 @@
       ],
       "view/item/context": [
         {
+          "command": "templateTree.copyId",
+          "when": "view == templateTree && viewItem == leaf"
+        },
+        {
           "command": "templateTree.copy",
           "when": "view == templateTree",
           "group": "inline"
         },
         {
-          "command": "templateTree.copy",
-          "when": "view == templateTree"
-        },
-        {
           "command": "templateTree.copyAql",
-          "when": "view == templateTree && viewItem == leaf"
-        },
-        {
-          "command": "templateTree.copyRegex",
           "when": "view == templateTree && viewItem == leaf"
         },
         {
@@ -135,7 +144,7 @@
         },
         {
           "command": "templateTree.copyContext",
-          "when": "view == templateTree"
+          "when": "view == templateTree && viewItem == leaf"
         }
       ]
     }

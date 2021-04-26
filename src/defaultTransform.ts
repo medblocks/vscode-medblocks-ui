@@ -1,9 +1,3 @@
-import { Tree } from "./templateItem";
-
-export type TransformFunction = (
-  leaf: Tree
-) => { html: string; name: string }[];
-
 const transformations = {
   DV_QUANTITY: (n) => [
     {
@@ -21,10 +15,6 @@ const transformations = {
                 }
             </mb-quantity>`,
     },
-    {
-      name: "Hello there",
-      html: "Hi I am a Quantity",
-    },
   ],
   DV_CODED_TEXT: (n) => [
     {
@@ -41,6 +31,27 @@ const transformations = {
                 : ""
             }
           </mb-select>`,
+    },
+    {
+      name: "Buttons",
+      html: `<mb-buttons path="${n.path}">
+      ${
+        n.inputs && n.inputs[0] && n.inputs[0].list
+          ? n.inputs[0].list
+              .map(
+                (option) =>
+                  `<mb-option code="${option.value}" display="${option.label}"></mb-option>`
+              )
+              .join("\n")
+          : ""
+      }
+      </mb-buttons>`,
+    },
+    {
+      name: "Search",
+      html: `<mb-search path="${n.path} label="${n.name || ""}">
+        <mb-filter label="Conditions" filter="<404684003"></mb-filter>
+      </mb-search>`,
     },
   ],
   DV_COUNT: (n) => [],
