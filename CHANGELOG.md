@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.15...v0.0.16) (2021-04-26)
+
+
+### Features
+
+* changed default transformations ([dd51b08](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/dd51b086c76d98dd0721a2dc8e63f878c1968bcd))
+
 ### [0.0.15](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.14...v0.0.15) (2021-04-25)
 
 
