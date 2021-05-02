@@ -84,6 +84,7 @@ export class TemplateTreeProvider
           return new TemplateItem(this.process(json.tree), t);
         } catch (e) {
           console.error(e);
+          vscode.window.showErrorMessage(e.message);
           return;
         }
       })
@@ -129,7 +130,11 @@ export class TemplateTreeProvider
   private processSnippets(tree: Tree): string {
     const leaf = !tree?.children?.length;
     if (leaf) {
-      return this.transform(tree)[0].html;
+      if (!this.transform(tree)[0]) {
+        vscode.window.showWarningMessage(`No default mappings for ${tree.rmType} @ ${tree.path}`)
+        return ''
+      }
+      return this.transform(tree)[0]?.html;
     } else {
       return tree.children.map((child) => child.snippet).join("\n");
     }
@@ -138,7 +143,7 @@ export class TemplateTreeProvider
     const leaf = !tree?.children?.length;
     if (leaf) {
       if (tree.inContext) {
-        return this.transform(tree)[0].html;
+        return this.transform(tree)[0]?.html;
       }
     } else {
       const contextSnippet = tree.children
@@ -155,6 +160,7 @@ export class TemplateTreeProvider
   ): "present" | "optionalAbsent" | "mandatoryAbsent" | "allPresent" {
     const leaf = !tree?.children?.length;
     const mandatory = tree.min >= 1;
+
     const present = this.searchPath(new RegExp(tree.runtimeRegex));
 
     if (leaf && present) {
@@ -201,8 +207,10 @@ export class TemplateTreeProvider
   }
 
   private searchPath(path: string | RegExp): boolean {
-    const result = this.textfile.search(path) >= 0;
-    return result;
-    // return false
+    if (this.textfile) {
+      const result = this.textfile.search(path) >= 0;
+      return result;
+    }
+    return false;
   }
 }
