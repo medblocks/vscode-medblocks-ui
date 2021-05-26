@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.17...v0.0.18) (2021-05-26)
+
+
+### Bug Fixes
+
+* bug if no snippet provided ([809ac92](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/809ac9206529bc8b231964b7e435f60dceb0ad76))
+* stopped popup if there's no defaul mapping ([265aca0](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/265aca031911a6c641b4c8dfd3a5ed899835881e))
+
 ### [0.0.17](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.16...v0.0.17) (2021-05-02)
 
 ### [0.0.16](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.15...v0.0.16) (2021-04-26)
