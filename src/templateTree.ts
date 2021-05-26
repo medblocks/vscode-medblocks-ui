@@ -8,7 +8,8 @@ import { TemplateItem, Snippet, Tree } from "./templateItem";
 export type TemplateSnippetItem = TemplateItem | Snippet;
 
 export class TemplateTreeProvider
-  implements vscode.TreeDataProvider<TemplateSnippetItem> {
+  implements vscode.TreeDataProvider<TemplateSnippetItem>
+{
   private _onDidChangeTreeData: vscode.EventEmitter<
     TemplateSnippetItem | undefined | void
   > = new vscode.EventEmitter<TemplateSnippetItem | undefined | void>();
@@ -131,8 +132,7 @@ export class TemplateTreeProvider
     const leaf = !tree?.children?.length;
     if (leaf) {
       if (!this.transform(tree)[0]) {
-        vscode.window.showWarningMessage(`No default mappings for ${tree.rmType} @ ${tree.path}`)
-        return ''
+        return "";
       }
       return this.transform(tree)[0]?.html;
     } else {
