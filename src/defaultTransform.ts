@@ -58,7 +58,7 @@ const transformations = {
     { name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>` }
   ],
   DV_DATE: n => [{ name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>` }],
-  context: n => [{ name: 'Context', html: `<mb-context path=${n.path}></mb-context>` }]
+  context: n => [{ name: 'Context', html: `<mb-context path="${n.path}"></mb-context>` }]
   // 'wrapper': (html) => `<div class="field">${html}</div>`
 };
 
