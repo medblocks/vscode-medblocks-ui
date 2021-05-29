@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.19...v0.0.20) (2021-05-29)
+
+
+### Bug Fixes
+
+* labels and default units ([3492d8f](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/3492d8ffa3f259770a6cba592bc3d60e744229eb))
+
 ### [0.0.19](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.18...v0.0.19) (2021-05-29)
 
 
