@@ -102,7 +102,7 @@ const transformations = {
   DV_ORDINAL: (n) => [
     {
       name: "Ordinal",
-      html: `<mb-select path=${n.path}>
+      html: `<mb-select path=${n.path} label="${n.name || ""}">
       ${
         n.inputs && n.inputs[0] && n.inputs[0].list
           ? n.inputs[0].list
