@@ -8,7 +8,7 @@ const transformations = {
   DV_QUANTITY: (n) => [
     {
       name: "Quantity",
-      html: `<mb-quantity default="${n?.inputs?.[1]?.list?.[0] || ""}" path="${
+      html: `<mb-quantity default="${n?.inputs?.[1]?.list?.[0]?.value || ""}" path="${
         n.path
       }" label="${n.name}">
                 ${
@@ -42,7 +42,7 @@ const transformations = {
     },
     {
       name: "Buttons",
-      html: `<mb-buttons path="${n.path}">
+      html: `<mb-buttons path="${n.path} label="${n.name || ''}">
       ${
         n.inputs && n.inputs[0] && n.inputs[0].list
           ? n.inputs[0].list
@@ -116,7 +116,7 @@ const transformations = {
     },
     {
       name: "Buttons",
-      html: `<mb-buttons path="${n.path}">
+      html: `<mb-buttons path="${n.path}" label="${n.name || ""}">
       ${
         n.inputs && n.inputs[0] && n.inputs[0].list
           ? n.inputs[0].list
