@@ -8,9 +8,9 @@ const transformations = {
   DV_QUANTITY: (n) => [
     {
       name: "Quantity",
-      html: `<mb-quantity default="${n?.inputs?.[1]?.list?.[0]?.value || ""}" path="${
-        n.path
-      }" label="${n.name}">
+      html: `<mb-quantity default="${
+        n?.inputs?.[1]?.list?.[0]?.value || ""
+      }" path="${n.path}" label="${n.name}">
                 ${
                   n.inputs && n.inputs[1] && n.inputs[1].list
                     ? n.inputs[1].list
@@ -42,7 +42,7 @@ const transformations = {
     },
     {
       name: "Buttons",
-      html: `<mb-buttons path="${n.path} label="${n.name || ''}">
+      html: `<mb-buttons path="${n.path} label="${n.name || ""}">
       ${
         n.inputs && n.inputs[0] && n.inputs[0].list
           ? n.inputs[0].list
@@ -57,8 +57,8 @@ const transformations = {
     },
     {
       name: "Search",
-      html: `<mb-search path="${n.path} label="${n.name || ""}">
-        <mb-filter label="Conditions" value="<404684003"></mb-filter>
+      html: `<mb-search path="${n.path}" label="${n.name || ""}">
+        <mb-filter label="Conditions" value="404684003"></mb-filter>
       </mb-search>`,
     },
   ],
