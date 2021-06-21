@@ -154,7 +154,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint . --ext .ts,.tsx",
-    "publish": "standard-version && vsce publish"
+    "release": "standard-version -a"
   },
   "devDependencies": {
     "@types/mkdirp": "^0.5.2",
