@@ -154,7 +154,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint . --ext .ts,.tsx",
-    "release": "standard-version -a"
+    "release": "standard-version -a && git push --follow-tags origin master"
   },
   "devDependencies": {
     "@types/mkdirp": "^0.5.2",
