@@ -33,7 +33,7 @@ const transformations = {
                 ? n.inputs[0].list
                     .map(
                       (option) =>
-                        `<mb-option code="${option.value}" display="${option.label}"></mb-option>`
+                        `<mb-option value="${option.value}" label="${option.label}"></mb-option>`
                     )
                     .join("\n")
                 : ""
@@ -62,7 +62,22 @@ const transformations = {
       </mb-search>`,
     },
   ],
-  DV_COUNT: (n) => [],
+  DV_COUNT: (n) => [
+    {
+      name: "Quantity",
+      html: `<mb-quantity path="${n.path}" label="${
+        n.name || ""
+      }" hideunit></mb-quantity>`,
+    },
+  ],
+  DV_PROPORTION: (n) => [
+    {
+      name: "Percent",
+      html: `<mb-percent path="${n.path}" label="${
+        n.name || ""
+      }"></mb-percent>`,
+    },
+  ],
   DV_TEXT: (n) => [
     {
       name: "Input",
@@ -130,14 +145,7 @@ const transformations = {
       </mb-buttons>`,
     },
   ],
-  DV_PROPORTIONAL: (n) => [
-    {
-      name: "Proportional",
-      html: `<mb-percent path="${n.path}" label="${
-        n?.label || ""
-      }"></mb-percent>`,
-    },
-  ],
+ 
   context: (n) => [
     { name: "Context", html: `<mb-context path="${n.path}"></mb-context>` },
   ],
