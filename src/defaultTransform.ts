@@ -89,6 +89,21 @@ const transformations = {
         n.name || ""
       }"></mb-input>`,
     },
+    {
+      name: "Text-Select",
+      html: `<mb-text-select path="${n.path}" label="${n.name || ""}">
+            ${
+              n.inputs && n.inputs[0] && n.inputs[0].list
+                ? n.inputs[0].list
+                    .map(
+                      (option) =>
+                        `<mb-option value="${option.value}" label="${option.label}"></mb-option>`
+                    )
+                    .join("\n")
+                : ""
+            }
+          </mb-text-select>`,
+    }
   ],
   DV_DATE_TIME: (n) => [
     {
