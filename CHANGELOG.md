@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.25](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.24...v0.0.25) (2021-08-29)
+
+
+### Features
+
+* :sparkles: mb-text-select added ([1b36f82](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/1b36f8240a77a24e86ce997517343de78e551d1d))
+
 ### [0.0.24](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.23...v0.0.24) (2021-08-23)
 
 
