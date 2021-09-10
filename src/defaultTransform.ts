@@ -103,6 +103,9 @@ const transformations = {
                 : ""
             }
           </mb-text-select>`,
+    },{
+      name:"Input-Multiple",
+      html:`<mb-input-multiple path="${n.path}" label="${n.name || ""}"></mb-input-multiple>`
     }
   ],
   DV_DATE_TIME: (n) => [
