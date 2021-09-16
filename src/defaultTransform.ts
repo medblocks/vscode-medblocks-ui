@@ -108,6 +108,12 @@ const transformations = {
       html:`<mb-input-multiple path="${n.path}" label="${n.name || ""}"></mb-input-multiple>`
     }
   ],
+  DV_DURATION:(n)=>[
+    {
+      name:"Duration",
+      html:`<mb-duration year month hour path="${n.path}" label="${n.name || ""}"></mb-duration>`
+    }
+  ],
   DV_DATE_TIME: (n) => [
     {
       name: "Date & Time",
