@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.27](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.26...v0.0.27) (2021-09-16)
+
+
+### Features
+
+* DV_DURATION can be detected from now ([ac7f263](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/ac7f2631baabdd14952d137ced53f680e2e32078))
+
 ### [0.0.26](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.25...v0.0.26) (2021-09-10)
 
 ### [0.0.25](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.24...v0.0.25) (2021-08-29)
