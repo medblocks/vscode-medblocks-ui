@@ -103,16 +103,48 @@ const transformations = {
                 : ""
             }
           </mb-text-select>`,
-    },{
-      name:"Input-Multiple",
-      html:`<mb-input-multiple path="${n.path}" label="${n.name || ""}"></mb-input-multiple>`
-    }
+    },
+    ...[
+      n.path.endsWith(":0")
+        ? {
+            name: "Input-Multiple",
+            html: `<mb-input-multiple path="${n.path.slice(
+              0,
+              n.path.length - 2
+            )}" label="${n.name || ""}"></mb-input-multiple>`,
+          }
+        : undefined,
+    ],
+    ...[
+      n.path.endsWith(":0")
+        ? {
+            name: "Text-Select",
+            html: `<mb-text-select multiple path="${n.path.slice(
+              0,
+              n.path.length - 2
+            )}" label="${n.name || ""}">
+            ${
+              n.inputs && n.inputs[0] && n.inputs[0].list
+                ? n.inputs[0].list
+                    .map(
+                      (option) =>
+                        `<mb-option value="${option.value}" label="${option.label}"></mb-option>`
+                    )
+                    .join("\n")
+                : ""
+            }
+          </mb-text-select>`,
+          }
+        : undefined,
+    ],
   ],
-  DV_DURATION:(n)=>[
+  DV_DURATION: (n) => [
     {
-      name:"Duration",
-      html:`<mb-duration year month hour path="${n.path}" label="${n.name || ""}"></mb-duration>`
-    }
+      name: "Duration",
+      html: `<mb-duration year month hour path="${n.path}" label="${
+        n.name || ""
+      }"></mb-duration>`,
+    },
   ],
   DV_DATE_TIME: (n) => [
     {
@@ -169,7 +201,7 @@ const transformations = {
       </mb-buttons>`,
     },
   ],
- 
+
   context: (n) => [
     { name: "Context", html: `<mb-context path="${n.path}"></mb-context>` },
   ],
