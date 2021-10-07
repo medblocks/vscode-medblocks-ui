@@ -113,7 +113,7 @@ const transformations = {
               n.path.length - 2
             )}" label="${n.name || ""}"></mb-input-multiple>`,
           }
-        : undefined,
+        : [],
     ],
     ...[
       n.path.endsWith(":0")
@@ -135,7 +135,7 @@ const transformations = {
             }
           </mb-text-select>`,
           }
-        : undefined,
+        : [],
     ],
   ],
   DV_DURATION: (n) => [
@@ -217,7 +217,7 @@ export default (leaf) => {
     const nodes = fn(leaf);
     const wrapper = transformations["wrapper"];
     if (wrapper) {
-      return nodes.map((node) => ({ ...node, html: wrapper(node.html) }));
+      return nodes.map((node) => ({ ...node, html: wrapper(node?.html) }));
     }
     return nodes;
   }
