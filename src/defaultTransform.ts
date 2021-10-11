@@ -104,20 +104,20 @@ const transformations = {
             }
           </mb-text-select>`,
     },
-    ...[
+    ...(
       n.path.endsWith(":0")
-        ? {
+        ? [{
             name: "Input-Multiple",
             html: `<mb-input-multiple path="${n.path.slice(
               0,
               n.path.length - 2
             )}" label="${n.name || ""}"></mb-input-multiple>`,
-          }
-        : [],
-    ],
-    ...[
+          }]
+        : []
+    ),
+    ...(
       n.path.endsWith(":0")
-        ? {
+        ? [{
             name: "Text-Select",
             html: `<mb-text-select multiple path="${n.path.slice(
               0,
@@ -134,9 +134,9 @@ const transformations = {
                 : ""
             }
           </mb-text-select>`,
-          }
-        : [],
-    ],
+          }]
+        : []
+    )
   ],
   DV_DURATION: (n) => [
     {
