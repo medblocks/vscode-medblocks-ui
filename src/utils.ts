@@ -14,11 +14,5 @@ export function pathExists(p: string): boolean {
 }
 
 export function getTransform(workspace: string): TransformFunction {
-  const configPath = path.join(workspace, "medblocksui.config.cjs");
-  if (pathExists(configPath)) {
-    delete require.cache[configPath];
-    const configModule = require(configPath);
-    return configModule.default;
-  }
   return defaultTransform;
 }
