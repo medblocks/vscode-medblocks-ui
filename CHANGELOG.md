@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.32](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.31...v0.0.32) (2021-10-11)
+
+
+### Features
+
+* :bug: removed external configuration ([71e4246](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/71e42468e00015eba30c353ef6727ddfc87b4320))
+
 ### [0.0.31](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.30...v0.0.31) (2021-10-11)
 
 ### [0.0.30](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.29...v0.0.30) (2021-10-07)
