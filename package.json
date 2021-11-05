@@ -2,7 +2,7 @@
   "name": "medblocks-ui",
   "displayName": "Medblocks UI VsCode Extension",
   "description": "Fast path resolution and snippets for Medblocks UI",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "publisher": "tornadoalert",
   "engines": {
     "vscode": "^1.52.0"
@@ -150,7 +150,6 @@
     }
   },
   "scripts": {
-
     "compile": "tsc -p ./",
     "release": "standard-version -a && git push --follow-tags origin master",
     "vscode:prepublish": "npm run esbuild-base -- --minify",

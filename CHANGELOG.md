@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.34](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.33...v0.0.34) (2021-11-05)
+
+
+### Features
+
+* opimizing vscode extension ([7e9d1fc](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/7e9d1fcc1dbabf29e4e5b07ae61f207cd88aed3d))
+
+
+### Bug Fixes
+
+* :bug: fixed bug where new data was not loading on document change ([c2e4a0e](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/c2e4a0ece97186e3ae19e35dfe429113b29d83e2))
+
 ### [0.0.33](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.32...v0.0.33) (2021-11-01)
 ### [0.0.32](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.31...v0.0.32) (2021-10-11)
 
