@@ -1,36 +1,5 @@
 import { ThemeIcon, TreeItem, TreeItemCollapsibleState } from "vscode";
-
-export interface Tree {
-  id: string;
-  name: string;
-  min: number;
-  max: number;
-  aqlPath: string;
-  rmType: string;
-  localizedName?: string;
-  nodeID?: string;
-  inContext?: boolean;
-  localizedNames?: {
-    [key: string]: string;
-  };
-  localizedDescriptions?: {
-    [key: string]: string;
-  };
-  annotations?: {
-    [key: string]: string;
-  };
-  children?: Tree[];
-
-  [other: string]: any;
-  // Added
-  path?: string;
-  runtimeRegex?: string;
-  regex?: string;
-  snippet?: string;
-  context?: string;
-  status?: "present" | "optionalAbsent" | "mandatoryAbsent" | "allPresent";
-}
-
+import { ProcessedTree } from "medblocks-ui/dist/utils";
 export class TemplateItem {
   type: "templateItem" = "templateItem";
 
@@ -41,7 +10,7 @@ export class TemplateItem {
     allPresent: "check-all",
   };
 
-  constructor(public tree: Tree, public label?: string) {}
+  constructor(public tree: ProcessedTree, public label?: string) {}
 
   get icon(): ThemeIcon {
     return new ThemeIcon(this.iconMap[this.tree.status]);
@@ -103,7 +72,7 @@ ${tree.description ? `Description: ${tree.description}\n` : ""}${
   }
 
   getChildren(): TemplateItem[] {
-    return this.tree.children.map((child) => new TemplateItem(child));
+    return this.tree.children.map((child:ProcessedTree) => new TemplateItem(child));
   }
 
   copy(): string {

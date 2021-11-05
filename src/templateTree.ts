@@ -1,9 +1,9 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import { TransformFunction } from "./defaultTransform";
+import { TransformFunction,ProcessedTree, Tree} from "medblocks-ui/dist/utils";
 import { pathExists, getTransform } from "./utils";
-import { TemplateItem, Snippet, Tree } from "./templateItem";
+import { TemplateItem, Snippet } from "./templateItem";
 
 export type TemplateSnippetItem = TemplateItem | Snippet;
 
@@ -20,10 +20,14 @@ export class TemplateTreeProvider
   constructor(
     public workspaceRoot: string,
     public transform?: TransformFunction,
-    public textfile: string = vscode.window.activeTextEditor?.document?.getText()
+    public textfile: string = vscode.window.activeTextEditor?.document?.getText(),
+    public templates?: TemplateItem[],
   ) {}
 
   refresh(): void {
+    this.templates.map((template)=>{
+     return new TemplateItem(this.processOnlyStatus(template.tree))
+    })
     this._onDidChangeTreeData.fire();
   }
 
@@ -35,6 +39,10 @@ export class TemplateTreeProvider
     this.transform = await getTransform(this.workspaceRoot);
   }
 
+  async refreshTemplates(){
+    this.templates = await this.getTemplates()
+  }
+
   getTreeItem(element: TemplateSnippetItem): vscode.TreeItem {
     return element.treeItem;
   }
@@ -44,7 +52,7 @@ export class TemplateTreeProvider
       return Promise.resolve([]);
     }
     if (!element) {
-      return Promise.resolve(this.getTemplates());
+      return Promise.resolve(this.templates);
     }
     if (element.type === "snippet") {
       throw new Error("Snippet should not have called children");
@@ -93,7 +101,7 @@ export class TemplateTreeProvider
     return data.filter((a) => a);
   }
 
-  private process(tree: Tree): Tree {
+  private process(tree: Tree): ProcessedTree {
     const preProcess = (element, parent) => {
       element.path = parent ? `${parent.path}/${element.id}` : element.id;
       element.regex = parent ? `${parent.regex}/${element.id}` : element.id;
@@ -105,7 +113,7 @@ export class TemplateTreeProvider
         element.runtimeRegex = `${element.runtimeRegex}:(\\d|\\\${.*})`;
         element.regex = `${element.regex}:(\\d)`;
       }
-      let node: Tree;
+      let node: ProcessedTree;
       if (element.children) {
         node = {
           ...element,
@@ -127,8 +135,31 @@ export class TemplateTreeProvider
     const preprocessed = preProcess(tree, null);
     return preprocessed;
   }
+  public processOnlyStatus(tree: ProcessedTree): ProcessedTree {
+    console.log("status only"+tree.path)
+    const preProcess = (element) => {
+      let node: ProcessedTree;
+      if (element.children) {
+        node = {
+          ...element,
+          children: element.children.map((child) => preProcess(child)),
+        };
+      } else {
+        node = {
+          ...element,
+        };
+      }
+      node = {
+        ...node,
+        status: this.processStatus(node)
+      };
+      return node;
+    };
+    const preprocessed = preProcess(tree);
+    return preprocessed;
+  }
 
-  private processSnippets(tree: Tree): string {
+  private processSnippets(tree: ProcessedTree): string {
     const leaf = !tree?.children?.length;
     if (leaf) {
       if (!this.transform(tree)[0]) {
@@ -139,7 +170,7 @@ export class TemplateTreeProvider
       return tree.children.map((child) => child.snippet).join("\n");
     }
   }
-  private processContext(tree: Tree) {
+  private processContext(tree: ProcessedTree) {
     const leaf = !tree?.children?.length;
     if (leaf) {
       if (tree.inContext) {
@@ -155,9 +186,10 @@ export class TemplateTreeProvider
     }
   }
 
-  private processStatus(
-    tree: Tree
+  private processStatus( 
+    tree: ProcessedTree
   ): "present" | "optionalAbsent" | "mandatoryAbsent" | "allPresent" {
+    
     const leaf = !tree?.children?.length;
     const mandatory = tree.min >= 1;
 
@@ -174,6 +206,7 @@ export class TemplateTreeProvider
     const someChildrenNotPresent = tree.children.some(
       (child) => child.status !== "allPresent"
     );
+    
     if (mandatory) {
       if (!present) {
         return "mandatoryAbsent";
