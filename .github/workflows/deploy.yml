@@ -1,17 +1,41 @@
-on:
-  push:
-    tags:
-      - "v*"
-name: Deploy Extension
-jobs:
-  deploy:
+ deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Slack Notification Start
+        id: slack
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel_id: C02K52UNL0N
+          status: STARTED
+          color: FFA500
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
       - uses: actions/checkout@v2
       - run: npm install
       - run: npm run compile
-      - uses: lannonbr/vsce-action@master
-        with:
+@@ -15,3 +24,25 @@ jobs:
           args: "publish -p $VSCE_TOKEN"
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+
+      - name: Notify Success Status
+        if: success()
+        env: 
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel_id: C02K52UNL0N
+          status: SUCCESS
+          color: good
+
+      - name: Notify Fail Status
+        if: failure()
+        env: 
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel_id: C02K52UNL0N
+          status: FAILURE
+          color: danger

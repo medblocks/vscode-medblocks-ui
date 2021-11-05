@@ -9,11 +9,12 @@ export async function activate(context: vscode.ExtensionContext) {
   const configuration = await getTransform(vscode.workspace.rootPath);
   const templateTree = new TemplateTreeProvider(
     vscode.workspace.rootPath,
-    configuration
+    configuration,
   );
+  await templateTree.refreshTemplates();
   vscode.window.registerTreeDataProvider("templateTree", templateTree);
-  vscode.commands.registerCommand("templateTree.refreshEntry", () => {
-    templateTree.refreshConfig();
+  vscode.commands.registerCommand("templateTree.refreshEntry",async () => {
+    await templateTree.refreshTemplates();
     templateTree.refresh();
   });
 
