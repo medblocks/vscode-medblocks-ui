@@ -25,7 +25,7 @@ export class TemplateTreeProvider
   ) {}
 
   refresh(): void {
-    this.templates.map((template)=>{
+    this.templates = this.templates.map((template)=>{
      return new TemplateItem(this.processOnlyStatus(template.tree))
     })
     this._onDidChangeTreeData.fire();
