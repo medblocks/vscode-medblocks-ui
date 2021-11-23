@@ -2,7 +2,7 @@
   "name": "medblocks-ui",
   "displayName": "Medblocks UI VsCode Extension",
   "description": "Fast path resolution and snippets for Medblocks UI",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "publisher": "tornadoalert",
   "engines": {
     "vscode": "^1.52.0"
