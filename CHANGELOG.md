@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.37](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.36...v0.0.37) (2022-02-08)
+
+
+### Features
+
+* medblocks-ui _health_care_facility added to ctx ([1a61c22](https://github.com/sidharthramesh/vscode-medblocks-ui/commit/1a61c229c4d3c33bc19e2d95f603a781864ed38d))
+
 ### [0.0.36](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.35...v0.0.36) (2021-11-28)
 
 ### [0.0.35](https://github.com/sidharthramesh/vscode-medblocks-ui/compare/v0.0.34...v0.0.35) (2021-11-23)
