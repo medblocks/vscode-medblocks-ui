@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import { TransformFunction,ProcessedTree, Tree} from "medblocks-ui/dist/utils";
-import { pathExists, getTransform } from "./utils";
+import { pathExists, getTransform, getExtension } from "./utils";
 import { TemplateItem, Snippet } from "./templateItem";
 
 export type TemplateSnippetItem = TemplateItem | Snippet;
@@ -86,16 +86,18 @@ export class TemplateTreeProvider
     const paths = this.getTemplatePaths();
     const data = await Promise.all(
       paths.map(async (t) => {
-        const p = path.join(this.workspaceRoot, "templates", t);
-        const string = await fs.promises.readFile(p, "utf-8");
-        try {
-          const json = JSON.parse(string);
-          return new TemplateItem(this.process(json.tree), t);
-        } catch (e) {
-          console.error(e);
-          vscode.window.showErrorMessage(e.message);
-          return;
-        }
+        if(getExtension(t) === "json"){
+          const p = path.join(this.workspaceRoot, "templates", t);
+          const file_content = await fs.promises.readFile(p, "utf-8");
+          try {
+            const json = JSON.parse(file_content);
+            return new TemplateItem(this.process(json.tree), t);
+          } catch (e) {
+            console.error(e);
+            vscode.window.showErrorMessage(e.message);
+            return;
+          }
+        };
       })
     );
     return data.filter((a) => a);
