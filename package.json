@@ -174,5 +174,6 @@
   },
   "repository": {
     "url": "https://github.com/sidharthramesh/vscode-medblocks-ui.git"
-  }
+  },
+	"license": "MIT"
 }
