@@ -170,10 +170,10 @@
     "typescript": "^4.2.2"
   },
   "dependencies": {
-    "medblocks-ui": "^0.0.100"
+    "medblocks-ui": "^0.0.186"
   },
   "repository": {
     "url": "https://github.com/sidharthramesh/vscode-medblocks-ui.git"
   },
-	"license": "MIT"
+  "license": "MIT"
 }
